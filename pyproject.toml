@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "whisper_sound_bank"
+version = "0.1.0"
+description = ""
+authors = ["Ohmatheus <max.marechal@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "supplemental"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "N", "I", "B", "UP", "TCH", "ANN", "PT"]
+ignore = [
+    "E501",
+    "ANN401"
+]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+warn_unused_ignores = true
+check_untyped_defs = true
+exclude = []
+files = [
+    "playground",
+]
+plugins = [
+    "pydantic.mypy"
+]
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_score = "function"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pydantic = "*"
+transformers = "^4.30.0"
+torch = "^2.7.0+cu118"
+faiss-cpu = "^1.7.4"
+torchvision = {version = "^0.22.0", source = "pytorch"}
+torchaudio = {version = "^2.7.0", source = "pytorch"}
+
+[tool.poetry.group.dev.dependencies]
+tox = "*"
+ruff = "*"
+mypy = "*"
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
