@@ -1,0 +1,33 @@
+# Poetry
+.venv/
+dist/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+.junie/
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
