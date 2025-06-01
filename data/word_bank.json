@@ -1,7 +1,7 @@
 {
   "words": [
     {
-      "name": "distriviche",
+      "name": "<distriviche>",
       "audios": [
         "word_bank\\distriviche_1.mp3",
         "word_bank\\distriviche_2.mp3",
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "name": "pokamoungatoa",
+      "name": "<pokamoungatoa>",
       "audios": [
         "word_bank\\pokamoungatoa_1.mp3",
         "word_bank\\pokamoungatoa_2.mp3",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "name": "zuguludivska",
+      "name": "<zuguludivska>",
       "audios": [
         "word_bank\\zuguludivska_1.mp3",
         "word_bank\\zuguludivska_2.mp3",
