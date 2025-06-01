@@ -2,6 +2,9 @@ import logging
 
 import torch
 
+from .config import config
+from .word_bank import word_bank
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -53,12 +56,18 @@ def test_cuda_gpu() -> None:
         logger.info("4. PyTorch was installed with CUDA support")
 
 
+def test_whisper_transcription() -> None:
+    logger.info("\n=== Whisper Transcription Test ===")
+    logger.info(f"Using Whisper model: {config.WHISPER_MODEL}")
+    # TODO: Implement Whisper transcription using settings.whisper_model
+
 def main() -> None:
     logger.info("Whisper Sound Bank - Starting application...")
+    logger.info(f"Using data directory: {config.DATA_DIR}")
+    logger.info(f"Word bank file: {config.WORD_BANK_FILE}")
 
     test_cuda_gpu()
-
-    # TODO: Play with Whisper transcription
+    test_whisper_transcription()
 
 
 if __name__ == "__main__":
