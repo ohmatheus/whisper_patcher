@@ -1,0 +1,31 @@
+{
+  "words": [
+    {
+      "name": "distriviche",
+      "audios": [
+        "word_bank\\distriviche_1.mp3",
+        "word_bank\\distriviche_2.mp3",
+        "word_bank\\distriviche_3.mp3",
+        "word_bank\\distriviche_4.mp3"
+      ]
+    },
+    {
+      "name": "pokamoungatoa",
+      "audios": [
+        "word_bank\\pokamoungatoa_1.mp3",
+        "word_bank\\pokamoungatoa_2.mp3",
+        "word_bank\\pokamoungatoa_3.mp3",
+        "word_bank\\pokamoungatoa_4.mp3"
+      ]
+    },
+    {
+      "name": "zuguludivska",
+      "audios": [
+        "word_bank\\zuguludivska_1.mp3",
+        "word_bank\\zuguludivska_2.mp3",
+        "word_bank\\zuguludivska_3.mp3",
+        "word_bank\\zuguludivska_4.mp3"
+      ]
+    }
+  ]
+}
