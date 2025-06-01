@@ -51,6 +51,7 @@ torch = "^2.7.0+cu118"
 faiss-cpu = "^1.7.4"
 torchvision = {version = "^0.22.0", source = "pytorch"}
 torchaudio = {version = "^2.7.0", source = "pytorch"}
+pydantic-settings = "^2.9.1"
 
 [tool.poetry.group.dev.dependencies]
 tox = "*"

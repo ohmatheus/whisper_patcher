@@ -1,9 +1,9 @@
 import logging
 
+import librosa
 import torch
-
-from .config import config
-from .word_bank import word_bank
+from config import config
+from transformers import WhisperForConditionalGeneration, WhisperProcessor
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -59,7 +59,47 @@ def test_cuda_gpu() -> None:
 def test_whisper_transcription() -> None:
     logger.info("\n=== Whisper Transcription Test ===")
     logger.info(f"Using Whisper model: {config.WHISPER_MODEL}")
-    # TODO: Implement Whisper transcription using settings.whisper_model
+
+    logger.info("Loading Whisper model...")
+    model_name = f"openai/whisper-{config.WHISPER_MODEL}"
+
+    processor = WhisperProcessor.from_pretrained(model_name)
+    model = WhisperForConditionalGeneration.from_pretrained(model_name)
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = model.to(device)
+    logger.info(f"Model loaded successfully on {device}")
+
+    # Get all mp3 files from the sentences_tests directory
+    sentences_dir = config.DATA_DIR / "sentences_tests"
+    mp3_files = list(sentences_dir.glob("*.mp3"))
+    logger.info(f"Found {len(mp3_files)} mp3 files in {sentences_dir}")
+
+    # Process each mp3 file
+    for mp3_file in mp3_files:
+        logger.info(f"\nProcessing file: {mp3_file.name}")
+
+        try:
+            audio, sampling_rate = librosa.load(mp3_file, sr=config.SAMPLE_RATE)
+
+            # Convert to float32 and create input features
+            inputs = processor(audio, sampling_rate=sampling_rate, return_tensors="pt")
+            input_features = inputs.input_features.to(device)
+
+            attention_mask = torch.ones_like(input_features[:, :, 0]).to(device)
+
+            forced_decoder_ids = processor.get_decoder_prompt_ids(language="fr", task="transcribe")
+            predicted_ids = model.generate(
+                input_features, attention_mask=attention_mask, forced_decoder_ids=forced_decoder_ids, max_length=448
+            )
+
+            transcription = processor.batch_decode(predicted_ids, skip_special_tokens=True)[0]
+
+            logger.info(f"Transcription: {transcription}")
+
+        except Exception as e:
+            logger.error(f"Error processing {mp3_file.name}: {e}")
+
 
 def main() -> None:
     logger.info("Whisper Sound Bank - Starting application...")

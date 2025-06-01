@@ -1,15 +1,13 @@
 from pathlib import Path
-from typing import Optional
 
-from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Config(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore", frozen=True)
 
-    OPENAI_API_KEY: Optional[str]
-    HUGGINGFACE_API_TOKEN: Optional[str]
+    OPENAI_API_KEY: str | None
+    HUGGINGFACE_API_TOKEN: str | None
 
     DATA_DIR: Path
     WORD_BANK_DIR: Path
