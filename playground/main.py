@@ -82,20 +82,36 @@ def test_whisper_transcription() -> None:
         try:
             audio, sampling_rate = librosa.load(mp3_file, sr=config.SAMPLE_RATE)
 
-            # Convert to float32 and create input features
             inputs = processor(audio, sampling_rate=sampling_rate, return_tensors="pt")
             input_features = inputs.input_features.to(device)
 
             attention_mask = torch.ones_like(input_features[:, :, 0]).to(device)
 
-            forced_decoder_ids = processor.get_decoder_prompt_ids(language="fr", task="transcribe")
+            forced_decoder_ids = processor.get_decoder_prompt_ids(language="fr", task="transcribe", no_timestamps=False)
+
+            # prompt = "Ces mots peuvent apparaitre : distriviche, pokamoungatoa, zuguludivska"
+            # prompt_ids = processor.get_prompt_ids(prompt, return_tensors="pt").to(device)
+
+
             predicted_ids = model.generate(
-                input_features, attention_mask=attention_mask, forced_decoder_ids=forced_decoder_ids, max_length=448
+                input_features,
+                attention_mask=attention_mask,
+                forced_decoder_ids=forced_decoder_ids,
+                max_length=448,
+                # prompt_ids=prompt_ids,
+                return_timestamps=True,
             )
 
-            transcription = processor.batch_decode(predicted_ids, skip_special_tokens=True)[0]
+            #transcription = processor.batch_decode(predicted_ids, skip_special_tokens=False)[0]
 
-            logger.info(f"Transcription: {transcription}")
+            decode = processor.batch_decode(
+                predicted_ids,
+                skip_special_tokens=False,
+                decode_with_timestamps=True
+            )
+            transcription_with_timestamps = decode[0]
+
+            logger.info(f"Transcription: {transcription_with_timestamps}")
 
         except Exception as e:
             logger.error(f"Error processing {mp3_file.name}: {e}")
