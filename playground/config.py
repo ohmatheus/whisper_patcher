@@ -24,18 +24,5 @@ class Config(BaseSettings):
     N_FFT: int
     HOP_LENGTH: int
 
-    def get_absolute_path(self, path: Path) -> Path:
-        """Convert a path relative to DATA_DIR to an absolute path"""
-        if path.is_absolute():
-            return path
-        return self.DATA_DIR / path
-
-    def get_relative_path(self, path: Path) -> Path:
-        """Convert an absolute path to a path relative to DATA_DIR"""
-        try:
-            return path.relative_to(self.DATA_DIR)
-        except ValueError:
-            # If the path is not relative to DATA_DIR, return it as is
-            return path
 
 config = Config()
