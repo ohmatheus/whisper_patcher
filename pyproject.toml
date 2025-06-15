@@ -6,12 +6,6 @@ authors = ["Ohmatheus <max.marechal@gmail.com>"]
 readme = "README.md"
 package-mode = false
 
-
-[[tool.poetry.source]]
-name = "pytorch"
-url = "https://download.pytorch.org/whl/cu118"
-priority = "supplemental"
-
 [tool.ruff]
 target-version = "py313"
 line-length = 120
@@ -44,14 +38,16 @@ plugins = [
 asyncio_default_fixture_loop_score = "function"
 
 [tool.poetry.dependencies]
+setuptools = "<81"
 python = "^3.12"
 pydantic = "*"
 transformers = "^4.52.0"
-torch = "^2.7.0+cu118"
 faiss-cpu = "^1.7.4"
-torchvision = {version = "^0.22.0", source = "pytorch"}
-torchaudio = {version = "^2.7.0", source = "pytorch"}
 pydantic-settings = "^2.9.1"
+torch = "2.7.1"
+torchvision = "^0.22.1"
+torchaudio = "^2.7.1"
+whisper-timestamped = "^1.15.8"
 
 [tool.poetry.group.dev.dependencies]
 tox = "*"
