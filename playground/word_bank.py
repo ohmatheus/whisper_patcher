@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from config import config
+from playground.config import config
 from pydantic import BaseModel, Field
 
 

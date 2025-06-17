@@ -84,9 +84,12 @@ class WordBankCompiler:
                 )
 
                 # Convert to decibel scale for better representation
-                mel_spec_db = librosa.power_to_db(mel_spec, ref=np.max)
+                mel_spec = librosa.power_to_db(mel_spec, ref=np.max)
 
-                computed_word.mel_spectrograms.append(mel_spec_db)
+                # Frequency wise normalization
+                #mel_spec = (mel_spec - mel_spec.mean(axis=1, keepdims=True)) / mel_spec.std(axis=1, keepdims=True)
+
+                computed_word.mel_spectrograms.append(mel_spec)
 
             except Exception as e:
                 print(f"Error processing {audio_path}: {e}")
@@ -101,7 +104,7 @@ class WordBankCompiler:
         # Find the minimum length across all spectrograms for consistent shape
         min_time_frames = min(spec.shape[1] for spec in computed_word.mel_spectrograms)
 
-        # Truncate all spectrograms to the same length
+        # Truncate all spectrograms to the same length - Should i really do that ?
         truncated_specs = [spec[:, :min_time_frames] for spec in computed_word.mel_spectrograms]
 
         # Stack and compute mean
@@ -110,8 +113,6 @@ class WordBankCompiler:
 
     def _compute_embeddings(self, computed_word: ComputedWord):
         """Compute audio embeddings (placeholder for your embedding method)"""
-        # Implement your embedding computation here
-        # This could use pre-trained models, MFCC features, etc.
         pass
 
     def _compute_duration(self, computed_word: ComputedWord):
@@ -122,7 +123,6 @@ class WordBankCompiler:
 
     def _save_mel_spectrogram_images(self, computed_words: list[ComputedWord]):
         """Save mel spectrogram images for debugging purposes"""
-        # Create debug directory if it doesn't exist
         debug_dir = config.DATA_DIR / "debug_mel_spectrograms"
         debug_dir.mkdir(exist_ok=True)
 
