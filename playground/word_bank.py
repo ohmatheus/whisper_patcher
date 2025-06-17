@@ -39,6 +39,3 @@ class WordBank(BaseModel):
         file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(file_path, "w") as f:
             json.dump(data, f, indent=2)
-
-
-word_bank = WordBank.from_file(config.WORD_BANK_FILE)
