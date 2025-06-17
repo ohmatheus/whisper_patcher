@@ -49,6 +49,8 @@ torchvision = "^0.22.1"
 torchaudio = "^2.7.1"
 whisper-timestamped = "^1.15.8"
 matplotlib = "^3.10.3"
+fastdtw = "^0.3.4"
+dtaidistance = "^2.3.13"
 
 [tool.poetry.group.dev.dependencies]
 tox = "*"
